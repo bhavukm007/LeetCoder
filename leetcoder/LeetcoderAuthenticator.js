@@ -1,5 +1,4 @@
-import {getElementBySelector} from "../utils/utils.js";
-import Logger from "../utils/Logger.js";
+import {getElementBySelector, sleep} from "../utils/utils.js";import Logger from "../utils/Logger.js";
 import {LEETCODER_ASCII_ART} from "../utils/constants.js";
 import {getBrowserDetails} from "../managers/BrowserManager.js";
 
@@ -7,8 +6,10 @@ class LeetcoderAuthenticator {
   static #loginUserHandler = async () => {
     const {page} = await getBrowserDetails();
     await page.goto(`https://leetcode.com/accounts/login/`, {
-      waitUntil: "networkidle2",
+    waitUntil: "domcontentloaded",
+    timeout: 0
     });
+    await sleep(5);
 
     try {
       await getElementBySelector(page, '#navbar_user_avatar', 3, 0);
